@@ -1,16 +1,22 @@
 const links = Array.from(document.querySelectorAll(".menu__link"));
-const subMenu = Array.from(document.querySelectorAll(".menu_sub"));
+const subMenus = Array.from(document.querySelectorAll(".menu_sub"));
 
 links.map((element) => {
   element.onclick = () => {
-    subMenu.forEach((item) => {
+    if (
+      element.nextElementSibling &&
+      element.nextElementSibling.classList.contains("menu_active")
+    ) {
+      element.nextElementSibling.classList.remove("menu_active");
+      return false;
+    }
+    subMenus.forEach((item) => {
       item.classList.remove("menu_active");
     });
-    try {
+    if (element.nextElementSibling) {
       element.nextElementSibling.classList.add("menu_active");
-    } catch {
-      return;
+      return false;
     }
-    return false;
+    return;
   };
 });
