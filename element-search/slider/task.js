@@ -3,6 +3,42 @@ const dots = Array.from(document.querySelectorAll(".slider__dot"));
 const buttonLeft = document.querySelector(".slider__arrow_prev");
 const buttonRight = document.querySelector(".slider__arrow_next");
 
+//Actual slide getting function
+getActualIndex = () =>
+  slides.findIndex((item) => item.classList.contains("slider__item_active"));
+
+//Slide changing function
+slideChange = (int) => {
+  slides[getActualIndex()].classList.remove("slider__item_active");
+  dots.forEach((dot) => dot.classList.remove("slider__dot_active"));
+  slides[int].classList.add("slider__item_active");
+  dots[int].classList.add("slider__dot_active");
+};
+
+//Events
+buttonRight.onclick = () => {
+  if (getActualIndex() === slides.length - 1) {
+    slideChange(0);
+  } else {
+    slideChange(getActualIndex() + 1);
+  }
+};
+
+buttonLeft.onclick = () => {
+  if (getActualIndex() === 0) {
+    slideChange(slides.length - 1);
+  } else {
+    slideChange(getActualIndex() - 1);
+  }
+};
+
+for (let i = 0; i < dots.length; i++) {
+  dots[i].onclick = () => {
+    slideChange(i);
+  };
+}
+
+/* Old solution
 buttonRight.onclick = () => {
   const actualIndex = slides.findIndex((item) =>
     item.classList.contains("slider__item_active")
@@ -46,3 +82,4 @@ dots.forEach(
       item.classList.add("slider__dot_active");
     })
 );
+*/
