@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Соло на клавиатуре</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keyboard Guru</title>
     <link rel="stylesheet" href="task.css" />
   </head>
   <body>
-    <div id="game">
-      <div class="status">
-        <p>Правильно введённых слов: <span class="status__wins">0</span></p>
-        <p>Неправильно введённых слов: <span class="status__loss">0</span></p>
-        <p>Время на ввод слова: <span class="status__time">0</span></p>
+    <div class="game">
+      <div class="game__block game__correct">
+        Слов введено верно:<br /><span class="game__success">0</span>
       </div>
-      <div class="word">
-        <span class="symbol">К</span>
-        <span class="symbol">о</span>
-        <span class="symbol">л</span>
-        <span class="symbol">я</span>
+      <div class="game__block game__wrong">
+        Количество ошибок:<br /><span class="game__fails">0</span>
       </div>
+      <div class="game__block game__counter">
+        Времени на ввод слова осталось:<br /><span class="game__time">0</span>
+      </div>
+      <div class="game__block game__main"></div>
     </div>
     <script src="task.js"></script>
   </body>

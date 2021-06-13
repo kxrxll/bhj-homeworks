@@ -1,14 +1,17 @@
-class Game {
+class WordsGame {
   constructor(container) {
     this.container = container;
-    this.wordElement = container.querySelector(".word");
-    this.winsElement = container.querySelector(".status__wins");
-    this.lossElement = container.querySelector(".status__loss");
-    this.timeElement = container.querySelector(".status__time");
+    this.success = container.querySelector(".game__success");
+    this.fails = container.querySelector(".game__fails");
+    this.time = container.querySelector(".game__time");
+    this.main = container.querySelector(".game__main");
 
-    this.reset();
+    this.looseCounter = 0;
+    this.winCounter = 0;
 
-    this.registerEvents();
+    this.restart();
+
+    this.listen();
 
     this.setTimer();
   }
@@ -19,98 +22,106 @@ class Game {
       document.querySelectorAll(".symbol")
     ).length;
     function decreaseTime() {
-      if (closure.timeElement.textContent === "0") {
-        closure.fail();
+      if (closure.time.textContent === "0") {
+        closure.loose();
       } else {
-        closure.timeElement.textContent--;
+        closure.time.textContent--;
       }
     }
     if (this.timer) {
       clearInterval(this.timer);
     }
-    this.timeElement.textContent = this.symbolsNumber;
+    this.time.textContent = this.symbolsNumber;
     this.timer = setInterval(decreaseTime, 1000);
   }
 
-  reset() {
-    this.setNewWord();
-    this.winsElement.textContent = 0;
-    this.lossElement.textContent = 0;
+  restart() {
+    this.renderWord();
+    this.success.textContent = "0";
+    this.fails.textContent = "0";
+    this.looseCounter = 0;
+    this.winCounter = 0;
   }
 
-  registerEvents() {
+  listen() {
     const closure = this;
     let current;
     let entered;
     function trackEntered(evt) {
-      current = closure.currentSymbol.textContent;
+      current = document.querySelector(".currentSym").textContent;
       entered = evt.key;
-      entered.toLowerCase() === current ? closure.success() : closure.fail();
+      entered.toLowerCase() === current ? closure.win() : closure.loose();
     }
-    document.addEventListener("keydown", trackEntered);
+    document.addEventListener("keypress", trackEntered);
   }
 
-  success() {
-    this.currentSymbol.classList.add("symbol_correct");
-    this.currentSymbol = this.currentSymbol.nextElementSibling;
-    if (this.currentSymbol !== null) {
-      return;
-    }
-
-    if (++this.winsElement.textContent === 10) {
-      alert("Победа!");
-      this.reset();
-      this.setTimer();
-    }
-    this.setNewWord();
-    this.setTimer();
+  chooseWord() {
+    const wordsArray = [
+      "best",
+      "music",
+      "glory",
+      "pirate",
+      "speaker",
+      "flight",
+      "привет из будущего",
+      "track",
+      'я люблю "kit kat"',
+      "slice",
+      "warning",
+      "prohibited",
+      "timing",
+      "java",
+      "tailor",
+      "truth",
+      "heart",
+      "goat",
+    ];
+    return wordsArray[Math.floor(Math.random() * wordsArray.length)];
   }
 
-  fail() {
-    if (++this.lossElement.textContent === 5) {
-      alert("Вы проиграли!");
-      this.reset();
-      this.setTimer();
-    }
-    this.setNewWord();
-    this.setTimer();
-  }
-
-  setNewWord() {
-    const word = this.getWord();
-    this.renderWord(word);
-  }
-
-  getWord() {
-    const words = [
-        "bob",
-        "awesome",
-        "netology",
-        "hello",
-        "kitty",
-        "rock",
-        "youtube",
-        "popcorn",
-        "cinema",
-        "love",
-        "javascript",
-      ],
-      index = Math.floor(Math.random() * words.length);
-
-    return words[index];
-  }
-
-  renderWord(word) {
-    const html = [...word]
+  renderWord() {
+    this.wordArr = this.chooseWord().split("");
+    this.main.innerHTML = this.wordArr
       .map(
-        (s, i) =>
-          `<span class="symbol ${i === 0 ? "symbol_current" : ""}">${s}</span>`
+        (item) =>
+          `<div class='${
+            item === this.wordArr[0] ? "currentSym" : "nextSym"
+          } symbol'>${item}</div>`
       )
       .join("");
-    this.wordElement.innerHTML = html;
+    this.currentSymbol = this.main.querySelector(".currentSym");
+  }
 
-    this.currentSymbol = this.wordElement.querySelector(".symbol_current");
+  win() {
+    if (this.container.querySelector(".currentSym").nextElementSibling) {
+      this.currentSymbol.classList.remove("currentSym");
+      this.currentSymbol = this.container.querySelector(".nextSym");
+      this.currentSymbol.classList.add("currentSym");
+      this.currentSymbol.classList.remove("nextSym");
+    } else if (this.winCounter == 9) {
+      alert("Ура! Победа!");
+      this.restart();
+      this.setTimer();
+    } else {
+      this.winCounter++;
+      this.success.textContent = this.winCounter;
+      this.renderWord();
+      this.setTimer();
+    }
+  }
+
+  loose() {
+    if (this.looseCounter == 5) {
+      alert("Поражение! Попробуйте еше раз!");
+      this.restart();
+      this.setTimer();
+    } else {
+      this.looseCounter++;
+      this.fails.textContent = this.looseCounter;
+      this.renderWord();
+      this.setTimer();
+    }
   }
 }
 
-new Game(document.getElementById("game"));
+new WordsGame(document.querySelector(".game"));

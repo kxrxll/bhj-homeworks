@@ -1,13 +1,59 @@
-.symbol {
-  font-size: 50px;
+body {
+  background-color: darkslateblue;
 }
 
-.symbol_correct {
-  color: green;
+.game__block {
+  width: 80vw;
+  height: 18vh;
+  background-color: blueviolet;
+  color: antiquewhite;
+  border: 5px solid coral;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 36px;
+  padding-top: 20px;
+  margin-bottom: 2vh;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.word_incorrect {
-  background: red;
-  color: #fff;
+.game__main {
+  color: blueviolet;
+  display: flex;
+  text-transform: uppercase;
+  padding: 25% auto;
 }
 
+.game__main div {
+  font-size: 64px;
+  font-weight: bold;
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.game__fails,
+.game__sucsess,
+.game__time {
+  display: block;
+  padding-top: 10px;
+}
+
+.game__fails {
+  color: darkred;
+}
+
+.game__sucsess {
+  color: darkseagreen;
+}
+
+.game__time {
+  color: hotpink;
+}
+
+.currentSym {
+  background-color: indianred;
+}
+
+.nextSym {
+  background-color: khaki;
+}
