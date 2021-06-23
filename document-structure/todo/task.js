@@ -8,13 +8,12 @@ let storage = [];
 if (JSON.parse(localStorage.getItem("TODOs"))) {
   storage = JSON.parse(localStorage.getItem("TODOs"));
   storage.forEach((item) => insertHTML(item));
-} else {
 }
 
 //Handlers
 function submitForm(e) {
   e.preventDefault();
-  const enteredText = textInput.value;
+  const enteredText = textInput.value.trim();
   if (enteredText) {
     insertHTML(enteredText);
     storage.push(enteredText);
@@ -38,6 +37,9 @@ function insertHTML(enteredText) {
 }
 function deleteNote(e) {
   e.preventDefault();
+  let removeText = e.target.previousElementSibling.textContent.trim();
+  storage = storage.filter(item => item !== removeText);
+  localStorage.setItem("TODOs", JSON.stringify(storage));
   e.target.closest(".task").remove();
 }
 
