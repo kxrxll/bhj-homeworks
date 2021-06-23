@@ -47,10 +47,11 @@ function addToCart(e) {
     product.querySelector(".product__quantity-value").textContent
   );
   if (checkCart(id)) {
-    const numberInCart = parseInt(
-      cart.querySelector(".cart__product-count").textContent
+    const numberInCart = parseInt(Array.from(
+      cart.querySelectorAll(".cart__product")).find(item => item.dataset.id == id).querySelector(".cart__product-count").textContent
     );
-    cart.querySelector(".cart__product-count").textContent =
+    Array.from(
+      cart.querySelectorAll(".cart__product")).find(item => item.dataset.id == id).querySelector(".cart__product-count").textContent =
       numberInCart + quantity;
   } else {
     const newItem = document.createElement("div");
@@ -76,16 +77,6 @@ function addToCart(e) {
     .getBoundingClientRect();
   flyingImg.style.left = `${startingRect.left}px`;
   flyingImg.style.top = `${startingRect.top}px`;
-  console.log(
-    itemsInCart
-      .find((item) => item.dataset.id === id)
-      .querySelector(".cart__product-image")
-  );
-  console.log(endingRect.top + " endingRect");
-  console.log(endingRect.left + " ndingRect");
-  console.log(product.querySelector(".product__image"));
-  console.log(startingRect.top + " startingRect");
-  console.log(startingRect.left + " startingRect");
   const xDiffInTick = (startingRect.x - endingRect.x) / 100;
   const yDiffInTick = (startingRect.y - endingRect.y) / 100;
   const imageTravel = setInterval(function (xDiff, yDiff) {
