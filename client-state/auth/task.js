@@ -8,6 +8,7 @@ function renderWelcome(id) {
   localStorage.setItem("id", id);
   welcome.querySelector("span").textContent = id;
   welcome.classList.add("welcome_active");
+  document.querySelector(".signin").classList.remove("signin_active");
 }
 
 sendButton.addEventListener("click", function (e) {
@@ -35,6 +36,7 @@ exitButton.addEventListener("click", function (e) {
   localStorage.removeItem("id");
   document.getElementById("signin__form").reset();
   welcome.classList.remove("welcome_active");
+  document.querySelector(".signin").classList.add("signin_active");
 });
 
 if (localStorage.getItem("id")) {

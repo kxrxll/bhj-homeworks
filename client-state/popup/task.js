@@ -10,7 +10,7 @@ const getCookie = (name) => {
   }
 };
 
-if (getCookie("closed") === "yes") {
+if (getCookie("closed") !== "yes") {
   modal[0].classList.add("modal_active");
 }
 

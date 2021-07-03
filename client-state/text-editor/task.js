@@ -13,5 +13,5 @@ function clearText(e) {
 window.onload = () => {
   textInput.value = localStorage.getItem("text");
 };
-textInput.addEventListener("blur", saveText);
+textInput.addEventListener("keyup", saveText);
 clearButton.addEventListener("click", clearText);
